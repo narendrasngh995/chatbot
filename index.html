@@ -3,36 +3,600 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Simple Chatbot</title>
-    <link rel="stylesheet" href="style.css">
+    <title>SDEC Nexus AI - Smart Campus Assistant</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 </head>
-<body>
-    <div class="chat-container">
-        <div class="chat-header">
-            <h2>AI Chatbot</h2>
-            <p>Ask me anything!</p>
-        </div>
-
-        <div class="chat-messages" id="chatMessages">
-            <div class="message bot-message">
-                <div class="message-content">
-                    Hello! I'm your virtual assistant. How can I help you today?
+<body class="dark-theme">
+    <!-- Landing Screen -->
+    <div id="landing-screen" class="landing-screen active">
+        <div class="landing-content">
+            <div class="landing-logo">
+                <div class="logo-icon">
+                    <svg width="64" height="64" viewBox="0 0 64 64" fill="none">
+                        <path d="M32 8L8 20V44L32 56L56 44V20L32 8Z" stroke="url(#grad1)" stroke-width="2" fill="none"/>
+                        <circle cx="32" cy="32" r="8" fill="url(#grad1)"/>
+                        <defs>
+                            <linearGradient id="grad1" x1="8" y1="8" x2="56" y2="56">
+                                <stop offset="0%" stop-color="#667eea"/>
+                                <stop offset="100%" stop-color="#764ba2"/>
+                            </linearGradient>
+                        </defs>
+                    </svg>
+                </div>
+                <h1 class="landing-title">SDEC Nexus AI</h1>
+            </div>
+            <h2 class="landing-heading">Your Campus. Your Academics.<br>One Intelligent Assistant.</h2>
+            <p class="landing-description">A premium smart academic assistant for Sunder Deep Engineering College students. Access course materials, plan your exams, and get instant academic guidance.</p>
+            <button class="btn-primary btn-large" onclick="app.enterApp()">Get Started</button>
+            <div class="landing-features">
+                <div class="feature-item">
+                    <div class="feature-icon">💬</div>
+                    <div class="feature-text">Smart Chatbot</div>
+                </div>
+                <div class="feature-item">
+                    <div class="feature-icon">📚</div>
+                    <div class="feature-text">Study Materials</div>
+                </div>
+                <div class="feature-item">
+                    <div class="feature-icon">📅</div>
+                    <div class="feature-text">Exam Planner</div>
+                </div>
+                <div class="feature-item">
+                    <div class="feature-icon">🔔</div>
+                    <div class="feature-text">Official Notices</div>
                 </div>
             </div>
         </div>
-
-        <div class="chat-input-container">
-            <input
-                type="text"
-                id="userInput"
-                class="chat-input"
-                placeholder="Type your message here..."
-                autocomplete="off"
-            >
-            <button id="sendButton" class="send-button">Send</button>
-        </div>
     </div>
 
-    <script src="script.js"></script>
+    <!-- Main App -->
+    <div id="main-app" class="main-app">
+        <!-- Sidebar -->
+        <aside id="sidebar" class="sidebar">
+            <div class="sidebar-header">
+                <div class="sidebar-logo">
+                    <svg width="32" height="32" viewBox="0 0 64 64" fill="none">
+                        <path d="M32 8L8 20V44L32 56L56 44V20L32 8Z" stroke="url(#grad2)" stroke-width="2" fill="none"/>
+                        <circle cx="32" cy="32" r="8" fill="url(#grad2)"/>
+                        <defs>
+                            <linearGradient id="grad2" x1="8" y1="8" x2="56" y2="56">
+                                <stop offset="0%" stop-color="#667eea"/>
+                                <stop offset="100%" stop-color="#764ba2"/>
+                            </linearGradient>
+                        </defs>
+                    </svg>
+                    <span>SDEC Nexus AI</span>
+                </div>
+                <button class="sidebar-toggle" onclick="app.toggleSidebar()">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                        <path d="M3 12h18M3 6h18M3 18h18" stroke-width="2" stroke-linecap="round"/>
+                    </svg>
+                </button>
+            </div>
+
+            <nav class="sidebar-nav">
+                <a href="#dashboard" class="nav-item active" data-page="dashboard">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                        <rect x="3" y="3" width="7" height="7" stroke-width="2"/>
+                        <rect x="14" y="3" width="7" height="7" stroke-width="2"/>
+                        <rect x="14" y="14" width="7" height="7" stroke-width="2"/>
+                        <rect x="3" y="14" width="7" height="7" stroke-width="2"/>
+                    </svg>
+                    <span>Dashboard</span>
+                </a>
+                <a href="#chatbot" class="nav-item" data-page="chatbot">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                        <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z" stroke-width="2"/>
+                    </svg>
+                    <span>AI Assistant</span>
+                </a>
+                <a href="#library" class="nav-item" data-page="library">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                        <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20M4 19.5A2.5 2.5 0 0 0 6.5 22H20V2H6.5A2.5 2.5 0 0 0 4 4.5z" stroke-width="2"/>
+                    </svg>
+                    <span>Study Library</span>
+                </a>
+                <a href="#planner" class="nav-item" data-page="planner">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                        <rect x="3" y="4" width="18" height="18" rx="2" stroke-width="2"/>
+                        <path d="M16 2v4M8 2v4M3 10h18" stroke-width="2"/>
+                    </svg>
+                    <span>Exam Planner</span>
+                </a>
+                <a href="#notices" class="nav-item" data-page="notices">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                        <path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9M13.73 21a2 2 0 0 1-3.46 0" stroke-width="2"/>
+                    </svg>
+                    <span>Notices</span>
+                </a>
+                <a href="#admin" class="nav-item" data-page="admin">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                        <circle cx="12" cy="12" r="3" stroke-width="2"/>
+                        <path d="M12 1v6m0 6v6M5.64 5.64l4.24 4.24m4.24 4.24l4.24 4.24M1 12h6m6 0h6M5.64 18.36l4.24-4.24m4.24-4.24l4.24-4.24" stroke-width="2"/>
+                    </svg>
+                    <span>Admin Panel</span>
+                </a>
+            </nav>
+
+            <div class="sidebar-footer">
+                <button class="theme-toggle" onclick="app.toggleTheme()">
+                    <svg class="theme-icon sun" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                        <circle cx="12" cy="12" r="5" stroke-width="2"/>
+                        <path d="M12 1v2m0 18v2M4.22 4.22l1.42 1.42m12.72 12.72l1.42 1.42M1 12h2m18 0h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42" stroke-width="2"/>
+                    </svg>
+                    <svg class="theme-icon moon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z" stroke-width="2"/>
+                    </svg>
+                </button>
+            </div>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <!-- Dashboard Page -->
+            <div id="page-dashboard" class="page active">
+                <div class="page-header">
+                    <h1 class="page-title">Dashboard</h1>
+                    <p class="page-subtitle">Welcome back to your academic hub</p>
+                </div>
+
+                <div class="dashboard-grid">
+                    <div class="card dashboard-welcome">
+                        <div class="welcome-content">
+                            <h2>Welcome, <span id="student-name">Student</span>!</h2>
+                            <p>Your personalized academic assistant is ready to help you succeed.</p>
+                            <div class="student-info">
+                                <div class="info-item">
+                                    <label>Branch:</label>
+                                    <select id="student-branch" onchange="app.updateProfile()">
+                                        <option value="">Select Branch</option>
+                                        <option value="CSE">Computer Science & Engineering</option>
+                                        <option value="CSE-AIML">CSE - AI & Machine Learning</option>
+                                        <option value="IT">Information Technology</option>
+                                        <option value="ECE">Electronics & Communication</option>
+                                        <option value="ME">Mechanical Engineering</option>
+                                        <option value="CE">Civil Engineering</option>
+                                        <option value="EE">Electrical Engineering</option>
+                                    </select>
+                                </div>
+                                <div class="info-item">
+                                    <label>Semester:</label>
+                                    <select id="student-semester" onchange="app.updateProfile()">
+                                        <option value="">Select Semester</option>
+                                        <option value="1">1st Semester</option>
+                                        <option value="2">2nd Semester</option>
+                                        <option value="3">3rd Semester</option>
+                                        <option value="4">4th Semester</option>
+                                        <option value="5">5th Semester</option>
+                                        <option value="6">6th Semester</option>
+                                        <option value="7">7th Semester</option>
+                                        <option value="8">8th Semester</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="card quick-stats">
+                        <h3>Quick Stats</h3>
+                        <div class="stats-grid">
+                            <div class="stat-item">
+                                <div class="stat-value" id="stat-materials">0</div>
+                                <div class="stat-label">Study Materials</div>
+                            </div>
+                            <div class="stat-item">
+                                <div class="stat-value" id="stat-exams">0</div>
+                                <div class="stat-label">Upcoming Exams</div>
+                            </div>
+                            <div class="stat-item">
+                                <div class="stat-value" id="stat-notices">0</div>
+                                <div class="stat-label">New Notices</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="card quick-actions">
+                        <h3>Quick Actions</h3>
+                        <div class="actions-grid">
+                            <button class="action-btn" onclick="app.navigateTo('chatbot')">
+                                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                                    <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z" stroke-width="2"/>
+                                </svg>
+                                <span>Ask AI</span>
+                            </button>
+                            <button class="action-btn" onclick="app.navigateTo('library')">
+                                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                                    <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20M4 19.5A2.5 2.5 0 0 0 6.5 22H20V2H6.5A2.5 2.5 0 0 0 4 4.5z" stroke-width="2"/>
+                                </svg>
+                                <span>Browse Materials</span>
+                            </button>
+                            <button class="action-btn" onclick="app.navigateTo('planner')">
+                                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                                    <rect x="3" y="4" width="18" height="18" rx="2" stroke-width="2"/>
+                                    <path d="M16 2v4M8 2v4M3 10h18" stroke-width="2"/>
+                                </svg>
+                                <span>Plan Exams</span>
+                            </button>
+                            <button class="action-btn" onclick="app.navigateTo('notices')">
+                                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                                    <path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9M13.73 21a2 2 0 0 1-3.46 0" stroke-width="2"/>
+                                </svg>
+                                <span>View Notices</span>
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="card upcoming-deadlines">
+                        <h3>Upcoming Deadlines</h3>
+                        <div id="dashboard-deadlines" class="deadlines-list"></div>
+                    </div>
+
+                    <div class="card recent-materials">
+                        <h3>Recently Viewed</h3>
+                        <div id="dashboard-recent" class="recent-list"></div>
+                    </div>
+
+                    <div class="card useful-links">
+                        <h3>Official Links</h3>
+                        <div class="links-list">
+                            <a href="https://aktu.ac.in" target="_blank" class="link-item">
+                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                                    <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6M15 3h6v6M10 14L21 3" stroke-width="2"/>
+                                </svg>
+                                AKTU Official Website
+                            </a>
+                            <a href="https://erp.aktu.ac.in" target="_blank" class="link-item">
+                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                                    <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6M15 3h6v6M10 14L21 3" stroke-width="2"/>
+                                </svg>
+                                AKTU ERP Portal
+                            </a>
+                            <a href="https://aktu.ac.in/results.html" target="_blank" class="link-item">
+                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                                    <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6M15 3h6v6M10 14L21 3" stroke-width="2"/>
+                                </svg>
+                                Check Results
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Chatbot Page -->
+            <div id="page-chatbot" class="page">
+                <div class="page-header">
+                    <h1 class="page-title">AI Assistant</h1>
+                    <p class="page-subtitle">Your intelligent academic companion</p>
+                </div>
+
+                <div class="chatbot-container">
+                    <div class="chat-messages" id="chat-messages">
+                        <div class="chat-welcome">
+                            <div class="welcome-avatar">
+                                <svg width="48" height="48" viewBox="0 0 64 64" fill="none">
+                                    <circle cx="32" cy="32" r="28" fill="url(#grad3)"/>
+                                    <path d="M32 8L8 20V44L32 56L56 44V20L32 8Z" stroke="white" stroke-width="2" fill="none"/>
+                                    <circle cx="32" cy="32" r="8" fill="white"/>
+                                    <defs>
+                                        <linearGradient id="grad3" x1="4" y1="4" x2="60" y2="60">
+                                            <stop offset="0%" stop-color="#667eea"/>
+                                            <stop offset="100%" stop-color="#764ba2"/>
+                                        </linearGradient>
+                                    </defs>
+                                </svg>
+                            </div>
+                            <h3>Hello! I'm your SDEC Nexus AI Assistant</h3>
+                            <p>I can help you with academic questions, course materials, exam preparation, AKTU information, and more. How can I assist you today?</p>
+                            <div class="suggested-prompts">
+                                <button class="prompt-chip" onclick="app.sendMessage('What is AKTU?')">What is AKTU?</button>
+                                <button class="prompt-chip" onclick="app.sendMessage('Help me prepare for exams')">Help me prepare for exams</button>
+                                <button class="prompt-chip" onclick="app.sendMessage('Explain data structures')">Explain data structures</button>
+                                <button class="prompt-chip" onclick="app.sendMessage('Show exam timetable')">Show exam timetable</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="chat-input-container">
+                        <div class="chat-input-wrapper">
+                            <textarea
+                                id="chat-input"
+                                placeholder="Ask me anything about your academics..."
+                                rows="1"
+                                onkeydown="app.handleChatKeydown(event)"
+                            ></textarea>
+                            <button class="btn-icon" onclick="app.sendChatMessage()" title="Send">
+                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                                    <path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z" stroke-width="2"/>
+                                </svg>
+                            </button>
+                            <button class="btn-icon" onclick="app.clearChat()" title="Clear Chat">
+                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                                    <path d="M3 6h18M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2" stroke-width="2"/>
+                                </svg>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Library Page -->
+            <div id="page-library" class="page">
+                <div class="page-header">
+                    <h1 class="page-title">Study Library</h1>
+                    <p class="page-subtitle">Access organized study materials and resources</p>
+                </div>
+
+                <div class="library-filters">
+                    <select id="filter-branch" onchange="app.filterLibrary()">
+                        <option value="">All Branches</option>
+                        <option value="CSE">Computer Science</option>
+                        <option value="CSE-AIML">CSE - AI/ML</option>
+                        <option value="IT">Information Technology</option>
+                        <option value="ECE">Electronics & Communication</option>
+                        <option value="ME">Mechanical</option>
+                        <option value="CE">Civil</option>
+                        <option value="EE">Electrical</option>
+                    </select>
+                    <select id="filter-semester" onchange="app.filterLibrary()">
+                        <option value="">All Semesters</option>
+                        <option value="1">1st Semester</option>
+                        <option value="2">2nd Semester</option>
+                        <option value="3">3rd Semester</option>
+                        <option value="4">4th Semester</option>
+                        <option value="5">5th Semester</option>
+                        <option value="6">6th Semester</option>
+                        <option value="7">7th Semester</option>
+                        <option value="8">8th Semester</option>
+                    </select>
+                    <input type="text" id="filter-search" placeholder="Search by subject or topic..." onkeyup="app.filterLibrary()">
+                </div>
+
+                <div id="library-content" class="library-grid"></div>
+            </div>
+
+            <!-- Planner Page -->
+            <div id="page-planner" class="page">
+                <div class="page-header">
+                    <h1 class="page-title">Smart Exam Planner</h1>
+                    <p class="page-subtitle">Organize your study schedule and track progress</p>
+                </div>
+
+                <div class="planner-grid">
+                    <div class="card planner-form">
+                        <h3>Add Exam/Deadline</h3>
+                        <form id="exam-form" onsubmit="app.addExam(event)">
+                            <div class="form-group">
+                                <label>Subject/Event</label>
+                                <input type="text" id="exam-subject" required>
+                            </div>
+                            <div class="form-group">
+                                <label>Date</label>
+                                <input type="date" id="exam-date" required>
+                            </div>
+                            <div class="form-group">
+                                <label>Type</label>
+                                <select id="exam-type">
+                                    <option value="exam">Exam</option>
+                                    <option value="assignment">Assignment</option>
+                                    <option value="practical">Practical</option>
+                                    <option value="viva">Viva</option>
+                                    <option value="other">Other</option>
+                                </select>
+                            </div>
+                            <button type="submit" class="btn-primary">Add to Calendar</button>
+                        </form>
+                    </div>
+
+                    <div class="card upcoming-exams">
+                        <h3>Upcoming Schedule</h3>
+                        <div id="exam-list" class="exam-list"></div>
+                    </div>
+
+                    <div class="card study-tracker">
+                        <h3>Study Progress</h3>
+                        <div id="study-progress" class="progress-list"></div>
+                    </div>
+
+                    <div class="card study-plan">
+                        <h3>Today's Tasks</h3>
+                        <form id="task-form" onsubmit="app.addTask(event)">
+                            <div class="form-group">
+                                <input type="text" id="task-input" placeholder="Add a study task..." required>
+                            </div>
+                            <button type="submit" class="btn-secondary">Add Task</button>
+                        </form>
+                        <div id="task-list" class="task-list"></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Notices Page -->
+            <div id="page-notices" class="page">
+                <div class="page-header">
+                    <h1 class="page-title">Official Notices</h1>
+                    <p class="page-subtitle">Stay updated with college and university announcements</p>
+                </div>
+
+                <div class="notices-tabs">
+                    <button class="tab-btn active" onclick="app.switchNoticeTab('all')">All Notices</button>
+                    <button class="tab-btn" onclick="app.switchNoticeTab('sdec')">SDEC</button>
+                    <button class="tab-btn" onclick="app.switchNoticeTab('aktu')">AKTU</button>
+                    <button class="tab-btn" onclick="app.switchNoticeTab('exam')">Examinations</button>
+                </div>
+
+                <div id="notices-content" class="notices-grid"></div>
+            </div>
+
+            <!-- Admin Page -->
+            <div id="page-admin" class="page">
+                <div class="page-header">
+                    <h1 class="page-title">Admin Panel</h1>
+                    <p class="page-subtitle">Manage content and resources (Prototype - Local Only)</p>
+                </div>
+
+                <div class="admin-notice">
+                    <strong>Note:</strong> This is a prototype admin interface for demonstration. In production, this should be secured with proper authentication and server-side authorization.
+                </div>
+
+                <div class="admin-tabs">
+                    <button class="tab-btn active" onclick="app.switchAdminTab('materials')">Study Materials</button>
+                    <button class="tab-btn" onclick="app.switchAdminTab('notices')">Notices</button>
+                    <button class="tab-btn" onclick="app.switchAdminTab('knowledge')">Knowledge Base</button>
+                </div>
+
+                <div id="admin-materials" class="admin-section active">
+                    <div class="card">
+                        <h3>Add Study Material</h3>
+                        <form id="admin-material-form" onsubmit="app.addMaterial(event)">
+                            <div class="form-group">
+                                <label>Title</label>
+                                <input type="text" id="material-title" required>
+                            </div>
+                            <div class="form-group">
+                                <label>Branch</label>
+                                <select id="material-branch" required>
+                                    <option value="CSE">Computer Science</option>
+                                    <option value="CSE-AIML">CSE - AI/ML</option>
+                                    <option value="IT">Information Technology</option>
+                                    <option value="ECE">Electronics & Communication</option>
+                                    <option value="ME">Mechanical</option>
+                                    <option value="CE">Civil</option>
+                                    <option value="EE">Electrical</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label>Semester</label>
+                                <select id="material-semester" required>
+                                    <option value="1">1st Semester</option>
+                                    <option value="2">2nd Semester</option>
+                                    <option value="3">3rd Semester</option>
+                                    <option value="4">4th Semester</option>
+                                    <option value="5">5th Semester</option>
+                                    <option value="6">6th Semester</option>
+                                    <option value="7">7th Semester</option>
+                                    <option value="8">8th Semester</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label>Subject</label>
+                                <input type="text" id="material-subject" required>
+                            </div>
+                            <div class="form-group">
+                                <label>Type</label>
+                                <select id="material-type" required>
+                                    <option value="notes">Notes</option>
+                                    <option value="pyq">Previous Year Questions</option>
+                                    <option value="practical">Practical File</option>
+                                    <option value="revision">Revision Material</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label>Description</label>
+                                <textarea id="material-description" rows="3"></textarea>
+                            </div>
+                            <button type="submit" class="btn-primary">Add Material</button>
+                        </form>
+                    </div>
+                </div>
+
+                <div id="admin-notices" class="admin-section">
+                    <div class="card">
+                        <h3>Add Notice</h3>
+                        <form id="admin-notice-form" onsubmit="app.addNotice(event)">
+                            <div class="form-group">
+                                <label>Title</label>
+                                <input type="text" id="notice-title" required>
+                            </div>
+                            <div class="form-group">
+                                <label>Organization</label>
+                                <select id="notice-org" required>
+                                    <option value="SDEC">SDEC</option>
+                                    <option value="AKTU">AKTU</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label>Category</label>
+                                <select id="notice-category" required>
+                                    <option value="academic">Academic</option>
+                                    <option value="exam">Examination</option>
+                                    <option value="admission">Admission</option>
+                                    <option value="general">General</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label>Description</label>
+                                <textarea id="notice-description" rows="4" required></textarea>
+                            </div>
+                            <div class="form-group">
+                                <label>Source URL (optional)</label>
+                                <input type="url" id="notice-url">
+                            </div>
+                            <button type="submit" class="btn-primary">Publish Notice</button>
+                        </form>
+                    </div>
+                </div>
+
+                <div id="admin-knowledge" class="admin-section">
+                    <div class="card">
+                        <h3>Knowledge Base Management</h3>
+                        <p>This section allows managing the chatbot's knowledge base. Currently showing demo data.</p>
+                        <div class="knowledge-stats">
+                            <div class="stat-item">
+                                <div class="stat-value" id="kb-topics">0</div>
+                                <div class="stat-label">Topics</div>
+                            </div>
+                            <div class="stat-item">
+                                <div class="stat-value" id="kb-responses">0</div>
+                                <div class="stat-label">Responses</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- Mobile Bottom Nav -->
+    <nav class="mobile-nav">
+        <a href="#dashboard" class="mobile-nav-item active" data-page="dashboard">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                <rect x="3" y="3" width="7" height="7" stroke-width="2"/>
+                <rect x="14" y="3" width="7" height="7" stroke-width="2"/>
+                <rect x="14" y="14" width="7" height="7" stroke-width="2"/>
+                <rect x="3" y="14" width="7" height="7" stroke-width="2"/>
+            </svg>
+            <span>Home</span>
+        </a>
+        <a href="#chatbot" class="mobile-nav-item" data-page="chatbot">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z" stroke-width="2"/>
+            </svg>
+            <span>Chat</span>
+        </a>
+        <a href="#library" class="mobile-nav-item" data-page="library">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20M4 19.5A2.5 2.5 0 0 0 6.5 22H20V2H6.5A2.5 2.5 0 0 0 4 4.5z" stroke-width="2"/>
+            </svg>
+            <span>Library</span>
+        </a>
+        <a href="#planner" class="mobile-nav-item" data-page="planner">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                <rect x="3" y="4" width="18" height="18" rx="2" stroke-width="2"/>
+                <path d="M16 2v4M8 2v4M3 10h18" stroke-width="2"/>
+            </svg>
+            <span>Planner</span>
+        </a>
+        <a href="#notices" class="mobile-nav-item" data-page="notices">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                <path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9M13.73 21a2 2 0 0 1-3.46 0" stroke-width="2"/>
+            </svg>
+            <span>Notices</span>
+        </a>
+    </nav>
+
+    <script src="app.js"></script>
 </body>
 </html>
